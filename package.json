@@ -10,6 +10,10 @@
     "datasource"
   ],
   "author": "Garbrand van der Molen <garbrand+npm@gmail.com>",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/garbrand/gm.datasource.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
