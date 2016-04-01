@@ -1,0 +1,18 @@
+{
+  "name": "gm.datasource",
+  "version": "1.0.0",
+  "description": "Simple datasource. Extends Array so you can add subscribers that get triggered when you `push`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "datasource"
+  ],
+  "author": "Garbrand van der Molen <garbrand+npm@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
