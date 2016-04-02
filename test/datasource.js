@@ -25,6 +25,25 @@ describe( 'Datasource:', () => {
 			expect( ds.__subscribers.length ).to.equal( 1 );
 		});
 
+		it('should not register a function twice', () => {
+			let ds = DS();
+			let fn = () => {};
+
+			ds.subscribe( fn );
+			expect( ds.subscribe( fn ) ).to.equal( false );
+		});
+
+		it('should unregister functions', () => {
+			let ds = DS();
+			let fn = () => {};
+
+			ds.subscribe( fn );
+			expect( ds.__subscribers.length ).to.equal( 1 );
+
+			ds.unsubscribe( fn );
+			expect( ds.__subscribers.length ).to.equal( 0 );
+		});
+
 		it('should not register anything else then functions as subscribers', () => {
 			let ds = DS();
 

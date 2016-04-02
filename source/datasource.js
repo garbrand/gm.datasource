@@ -1,12 +1,15 @@
 'use strict';
 
-module.exports = function DataSourceFactory() {
+let instances = 0;
+
+function DataSourceFactory() {
+	// DataSourceFactory extends Array, and wraps 'push' so it can be used for pub/sub.
+	instances++;
+
+	let collection = new Array( ...arguments );
 
 	// TODO: move all this code into a constructor, so we can do the below:
 	// collection.prototype.constructor = DataSourceFactory;
-
-	// DataSourceFactory extends Array, and wraps 'push' so it can be used for pub/sub.
-	let collection = new Array( ...arguments );
 
 	// Mixing in custom methods to Array:
 	Object.defineProperties( collection, {
@@ -24,7 +27,16 @@ module.exports = function DataSourceFactory() {
 			enumerable: false,
 			value: ( fn ) => {
 				if( typeof fn !== 'function' ) throw new TypeError('You can only subscribe functions');
-				collection.__subscribers.push( fn );
+				// Only register a function once
+				return ( collection.__subscribers.indexOf( fn ) > -1 )? false : collection.__subscribers.push( fn );
+			}
+		},
+		'unsubscribe': {
+			enumerable: false,
+			value: ( fn ) => {
+				if( typeof fn !== 'function' ) throw new TypeError('You can only ubsubscribe functions');
+				let index = collection.__subscribers.indexOf( fn );
+				return ( index > -1 )? collection.__subscribers.splice( index, 1 ) : false;
 			}
 		},
 		'__subscribers': {
@@ -35,3 +47,7 @@ module.exports = function DataSourceFactory() {
 
 	return collection;
 }
+
+DataSourceFactory.instances = () => instances;
+
+module.exports = DataSourceFactory;
