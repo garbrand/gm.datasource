@@ -1,6 +1,10 @@
 'use strict';
 
 module.exports = function DataSourceFactory() {
+
+	// TODO: move all this code into a constructor, so we can do the below:
+	// collection.prototype.constructor = DataSourceFactory;
+
 	// DataSourceFactory extends Array, and wraps 'push' so it can be used for pub/sub.
 	let collection = new Array( ...arguments );
 
